@@ -187,6 +187,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="MFC Test.h" />
     <ClInclude Include="MFC TestDlg.h" />
+    <ClInclude Include="MyFunction.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -194,6 +195,12 @@
   <ItemGroup>
     <ClCompile Include="MFC Test.cpp" />
     <ClCompile Include="MFC TestDlg.cpp" />
+    <ClCompile Include="MyFunction.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Myfunction.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeaderOutputFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

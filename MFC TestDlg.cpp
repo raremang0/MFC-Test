@@ -7,7 +7,10 @@
 #include "MFC Test.h"
 #include "MFC TestDlg.h"
 #include "afxdialogex.h"
-#include<Windows.h>
+#include"MyFunction.h"
+
+#pragma warning(disable:4996)
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -95,7 +98,64 @@ HCURSOR CMFCTestDlg::OnQueryDragIcon()
 
 void CMFCTestDlg::OnBnClickedButtonInject()
 {
+	//判断pid是否输入
+	CString szTemp;
+	DWORD dwPid = NULL;
+	GetDlgItem(IDC_EDIT_PID)->GetWindowTextA(szTemp);
+	if (!szTemp)
+	{
+		GetDlgItem(IDC_STATIC_Caution)->SetWindowTextA("请输入需要注入的PID");
+		return;
+	}
+	//读取编辑框到变量dwPid,获取Pid
+	sscanf(szTemp, "%d", &dwPid);
+
+
+	PIMAGE_NT_HEADERS pNtH = NULL;
+	PIMAGE_FILE_HEADER pFH = NULL;
+	PIMAGE_OPTIONAL_HEADER pOH = NULL;
+	PIMAGE_SECTION_HEADER pSH = NULL;
+
+	FILE* fp;
+	int FileSize = 0;
+	fp = fopen(szBuf, "rb");
+	if (fp == NULL)
+	{
+		GetDlgItem(IDC_STATIC_Caution)->SetWindowTextA("文件读取失败");
+		return;
+	}
+
+	fseek(fp, 0, SEEK_END);
+	FileSize = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
+	PVOID pImageBase = malloc(FileSize);
+
+	memset(pImageBase, NULL, FileSize);
+
+	if (!fread(pImageBase, FileSize, 1, fp))
+	{
+		GetDlgItem(IDC_STATIC_Caution)->SetWindowTextA("复制文件到缓冲区失败");
+		return;
+	}
+
+	pNtH = GetNtHeaders(pImageBase);
+	if (pNtH->Signature != IMAGE_NT_SIGNATURE || pNtH == NULL)
+	{
+		GetDlgItem(IDC_STATIC_Caution)->SetWindowTextA("不是有效的PE文件");
+		return;
+	}
+
+	pFH = GetFileHeader(pImageBase);
+	pOH = GetOptionalHeader(pImageBase);
+	pSH = GetFirstSectionHeader(pImageBase);
+
+	PVOID pImageBuffer = NULL;
+	CopyFileBufferToImageBuffer(pImageBase, &pImageBuffer);
+
+	HANDLE hd = OpenProcess(PROCESS_ALL_ACCESS, NULL, dwPid);
 	
+	VirtualAlloc()
+
 	// TODO: 在此添加控件通知处理程序代码
 }
 
@@ -123,8 +183,7 @@ void CMFCTestDlg::OnBnClickedButtonSelectfile()
 	{
 		SHGetPathFromIDList(pil, szBuf);
 		GetDlgItem(IDC_EDIT_Path)->SetWindowTextA(szBuf);
+		GetDlgItem(IDC_STATIC_Caution)->SetWindowTextA("选择文件成功");
 	}
-
-	
 	// TODO: 在此添加控件通知处理程序代码
 }
