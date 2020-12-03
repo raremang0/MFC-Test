@@ -11,9 +11,6 @@
 #define new DEBUG_NEW
 #endif
 
-HWND Edit_Pid = NULL;
-HWND Edit_Path = NULL;
-
 // CMFCTestApp
 
 BEGIN_MESSAGE_MAP(CMFCTestApp, CWinApp)
@@ -53,9 +50,6 @@ BOOL CMFCTestApp::InitInstance()
 	InitCommonControlsEx(&InitCtrls);
 
 	CWinApp::InitInstance();
-	
-	Edit_Pid=GetDlgItem(IDD_MFCTEST_DIALOG,)
-
 
 	AfxEnableControlContainer();
 

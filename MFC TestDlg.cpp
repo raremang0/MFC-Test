@@ -7,12 +7,14 @@
 #include "MFC Test.h"
 #include "MFC TestDlg.h"
 #include "afxdialogex.h"
-
+#include<Windows.h>
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-
+HWND Dialog_Main = NULL;
+HWND Edit_Pid = NULL;
+HWND Edit_Path = NULL;
 // CMFCTestDlg 对话框
 
 
@@ -48,6 +50,11 @@ BOOL CMFCTestDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+
+	Dialog_Main = AfxGetApp()->GetMainWnd()->GetSafeHwnd();
+	Edit_Pid = CMFCTestDlg::GetDlgItem(IDD_EDI_)
+	Edit_Path = GetDlgItem(Dialog_Main, IDC_EDIT_Path);
+
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
