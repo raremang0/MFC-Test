@@ -12,9 +12,8 @@
 #define new DEBUG_NEW
 #endif
 
-HWND Dialog_Main = NULL;
-HWND Edit_Pid = NULL;
-HWND Edit_Path = NULL;
+TCHAR szBuf[4096] = { 0 };
+DWORD dwPid = NULL;
 // CMFCTestDlg 对话框
 
 
@@ -51,10 +50,7 @@ BOOL CMFCTestDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 
-	Dialog_Main = AfxGetApp()->GetMainWnd()->GetSafeHwnd();
-	Edit_Pid = CMFCTestDlg::GetDlgItem(IDD_EDI_)
-	Edit_Path = GetDlgItem(Dialog_Main, IDC_EDIT_Path);
-
+	
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -108,7 +104,6 @@ void CMFCTestDlg::OnBnClickedButtonSelectfile()
 {
 	LPITEMIDLIST pil = NULL;
 	INITCOMMONCONTROLSEX InitCtrls = { 0 };
-	TCHAR szBuf[4096] = { 0 };
 	BROWSEINFO bi = { 0 };
 
 
@@ -127,7 +122,7 @@ void CMFCTestDlg::OnBnClickedButtonSelectfile()
 	if (NULL != pil)
 	{
 		SHGetPathFromIDList(pil, szBuf);
-	
+		GetDlgItem(IDC_EDIT_Path)->SetWindowTextA(szBuf);
 	}
 
 	
