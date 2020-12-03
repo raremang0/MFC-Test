@@ -3,9 +3,9 @@
 // 供 MFCTest.rc 使用
 //
 #define IDD_MFCTEST_DIALOG              102
+#define IDD_MFCTEST_DIALOG_MAIN         102
 #define IDR_MAINFRAME                   128
 #define IDC_EDIT_PID                    1000
-#define IDC_EDIT_DLLPath                1001
 #define IDC_EDIT_Path                   1001
 #define IDC_BUTTON_Inject               1002
 #define IDC_BUTTON_SelectFile           1003

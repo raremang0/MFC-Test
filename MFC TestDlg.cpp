@@ -31,6 +31,8 @@ void CMFCTestDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CMFCTestDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON_Inject, &CMFCTestDlg::OnBnClickedButtonInject)
+	ON_BN_CLICKED(IDC_BUTTON_SelectFile, &CMFCTestDlg::OnBnClickedButtonSelectfile)
 END_MESSAGE_MAP()
 
 
@@ -86,3 +88,41 @@ HCURSOR CMFCTestDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CMFCTestDlg::OnBnClickedButtonInject()
+{
+	
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void CMFCTestDlg::OnBnClickedButtonSelectfile()
+{
+	LPITEMIDLIST pil = NULL;
+	INITCOMMONCONTROLSEX InitCtrls = { 0 };
+	TCHAR szBuf[4096] = { 0 };
+	BROWSEINFO bi = { 0 };
+
+
+	bi.hwndOwner = NULL;
+	bi.iImage = 0;
+	bi.lParam = NULL;
+	bi.lpfn = NULL;
+	bi.lpszTitle = ("请选择文件路径");
+	bi.pszDisplayName = szBuf;
+	bi.ulFlags = BIF_BROWSEINCLUDEFILES;
+
+	InitCommonControlsEx(&InitCtrls);
+
+	pil = SHBrowseForFolder(&bi);
+
+	if (NULL != pil)
+	{
+		SHGetPathFromIDList(pil, szBuf);
+	
+	}
+
+	
+	// TODO: 在此添加控件通知处理程序代码
+}
